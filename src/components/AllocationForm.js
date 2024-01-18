@@ -10,26 +10,32 @@ const AllocationForm = (props) => {
 
     const submitEvent = () => {
 
-            if(cost > remaining) {
-                alert("The value cannot exceed remaining funds  £"+remaining);
-                setCost("");
-                return;
+            if(cost < 0) {
+                alert("Please enter a positive amount");
             }
 
-        const expense = {
-            name: name,
-            cost: parseInt(cost),
-        };
-        if(action === "Reduce") {
-            dispatch({
-                type: 'RED_EXPENSE',
-                payload: expense,
-            });
-        } else {
-                dispatch({
-                    type: 'ADD_EXPENSE',
-                    payload: expense,
-                });
+            else {
+                if(cost > remaining) {
+                    alert("The value cannot exceed remaining funds  £"+remaining);
+                    setCost("");
+                    return;
+                }
+
+                const expense = {
+                    name: name,
+                    cost: parseInt(cost),
+                };
+                if(action === "Reduce") {
+                    dispatch({
+                        type: 'RED_EXPENSE',
+                        payload: expense,
+                    });
+                } else {
+                        dispatch({
+                            type: 'ADD_EXPENSE',
+                            payload: expense,
+                        });
+                    }
             }
     };
 
@@ -65,7 +71,8 @@ const AllocationForm = (props) => {
                         id='cost'
                         value={cost}
                         style={{ marginLeft: '2rem' , size: 10}}
-                        onChange={(event) => setCost(event.target.value)}>
+                        onChange={(event) => setCost(event.target.value)}
+                        min = "0">
                         </input>
 
                     <button className="btn btn-primary" onClick={submitEvent} style={{ marginLeft: '2rem' }}>
