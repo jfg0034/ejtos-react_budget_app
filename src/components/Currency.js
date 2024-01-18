@@ -1,13 +1,42 @@
 import React, { useContext } from 'react';
-//import { AppContext } from '../context/AppContext';
+import { AppContext } from '../context/AppContext';
 const Currency = () => {
+
+    const { dispatch } = useContext(AppContext);
+
+    const setCurrency = (event) => {
+        if(event.target.value === "Pound") {
+            dispatch({
+                type: 'CHG_CURRENCY',
+                payload: "£",
+            });
+        } 
+        else if (event.target.value === "Euro"){
+            dispatch({
+                type: 'CHG_CURRENCY',
+                payload: "€",
+            });
+        }
+        else if (event.target.value === "Ruppee"){
+            dispatch({
+                type: 'CHG_CURRENCY',
+                payload: "₹",
+            });
+        }
+        else {
+            dispatch({
+                type: 'CHG_CURRENCY',
+                payload: "$",
+            });
+        }
+    }
 
     return (
         <div className='row'>
             <div className="input-group mb-3" style={{ marginLeft: '2rem' }}>
-                <label className="input-group-text" htmlFor="inputCurrencySelect">Currency: </label>
+                <label className="input-group-text" htmlFor="currencySelect">Currency: </label>
             
-                <select className="custom-select" id="currencySelect" >
+                <select className="custom-select" id="currencySelect" onChange={setCurrency}>
                     <option value="Dollar" name="dollar"> $ Dollar</option>
                     <option value="Pound" name="pound">£ Pound</option>
                     <option value="Euro" name="euro">€ Euro</option>
